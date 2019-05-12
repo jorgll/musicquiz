@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { RootState } from '../RootState';
+import { RootState } from '../redux-root/state';
 import { SpotifyActionTypes, initializeSpotify, playTrack } from '../spotify'
 
 const styles = StyleSheet.create({
@@ -66,10 +66,6 @@ class LoginScreen extends Component<LoginFormProps, LoginFormState> {
     componentDidMount() {
        this.props.initializeSpotify();
     }
-
-    // spotifyLoginButtonWasPressed() {
-    //     this.props.playTrack();
-    // }
 
     render() {
     return (
