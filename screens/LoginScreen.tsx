@@ -38,19 +38,22 @@ const styles = StyleSheet.create({
     },
 });
 
-interface LoginFormProps {
+type Props = Readonly <{
+    isSpotifyInitialized: boolean;
+    spotifyErrorMessage: string;
     initializeSpotify: () => SpotifyActionTypes;
     playTrack: () => SpotifyActionTypes;
-    isSpotifyInitialized?: boolean;
-}
+}>;
 
-interface LoginFormState {
-  userName: string;
-}
+type State = Readonly <{
+}>;
 
 const mapStateToProps = (state: RootState) => {
+    if (!state.spotify) return {};
+
     return {
-        isSpotifyInitialized: state.spotify.isInitialized
+        isSpotifyInitialized: state.spotify.isInitialized,
+        spotifyErrorMessage: state.spotify.errorMessage
     }
 }
 
@@ -58,8 +61,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     return bindActionCreators({ initializeSpotify, playTrack }, dispatch)
 };
 
-class LoginScreen extends Component<LoginFormProps, LoginFormState> {
-    constructor(props: LoginFormProps) {
+class LoginScreen extends React.Component<Props, State> {
+    constructor(props: Props) {
         super(props);
     }
 
@@ -67,18 +70,30 @@ class LoginScreen extends Component<LoginFormProps, LoginFormState> {
        this.props.initializeSpotify();
     }
 
-    render() {
-    return (
-        <View style={styles.container}>
-        <Text style={styles.welcome}>Spotify Music Quiz</Text>
-        <Text style={styles.instructions}>{this.props.isSpotifyInitialized ? "Spotify initializing..." : "Spotify initialized"}</Text>
-        <TouchableHighlight onPress={this.props.playTrack} style={styles.spotifyLoginButton}>
-            <Text style={styles.spotifyLoginButtonText}>Log into Spotify</Text>
-        </TouchableHighlight>
+    shouldComponentUpdate(nextProps: Props, nextState: State) {
+        return (nextProps.isSpotifyInitialized === this.props.isSpotifyInitialized);
+    }
 
-        </View>
-    );
+    render() {
+        console.log('Enter render(). Props: ', this.props);
+        return (
+            <View style={styles.container}>
+            <Text style={styles.welcome}>Spotify Music Quiz</Text>
+            {this.props.isSpotifyInitialized ? 
+                <Text style={styles.instructions}>Spotify initializing...</Text>
+            : 
+                 <Text style={styles.instructions}>Press Play</Text>
+            }
+            
+            <TouchableHighlight onPress={this.props.playTrack} style={styles.spotifyLoginButton}>
+                <Text style={styles.spotifyLoginButtonText}>Play Track</Text>
+            </TouchableHighlight>
+            {this.props.spotifyErrorMessage !== '' ? <Text>{this.props.spotifyErrorMessage}</Text> : null}
+
+            </View>
+        );
     }
 }
 
+//@ts-ignore - LoginScreen type mismatch
 export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);

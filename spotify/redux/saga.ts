@@ -1,16 +1,23 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { put, call, takeEvery } from 'redux-saga/effects';
 import { INITIALIZE_SPOTIFY, PLAY_TRACK, actions } from './actions'
 import { Service } from '../service'
 
 export class Saga {
-    sagas = [ this.initializeSpotify(), this.playTrack() ];
+    sagas = [ this.watchInitializeSpotify(), this.watchPlayTrack() ];
     
     constructor(private readonly service: Service) {
         console.log('Saga constructor called');
     }
 
+    *watchInitializeSpotify() {
+        yield takeEvery(INITIALIZE_SPOTIFY, this.initializeSpotify.bind(this));
+    }
+
+    *watchPlayTrack() {
+        yield takeEvery(PLAY_TRACK, this.playTrack.bind(this));
+    }
+
     *initializeSpotify() {
-        console.log('in the initializeSpotifySaga');
         try {
             yield this.service.initializeSpotify();
             yield put (actions.initializeSpotifyCompleted(true, ''));
@@ -20,7 +27,6 @@ export class Saga {
     }
 
     *playTrack() {
-        console.log('in the playTrack saga');
         try {
             yield this.service.playTrack();
         } catch (error) {
@@ -31,7 +37,5 @@ export class Saga {
 
 const spotifySaga = new Saga(new Service);
 export const spotifySagas = [
-    ...spotifySaga.sagas,
-    takeEvery(INITIALIZE_SPOTIFY, spotifySaga.initializeSpotify),
-    takeEvery(PLAY_TRACK, spotifySaga.playTrack)
+    ...spotifySaga.sagas
 ];

@@ -17,14 +17,14 @@ const initialState: SpotifyState = {
 };
 
 const spotifyReducer = (state = initialState, action: SpotifyActionTypes): SpotifyState => {
-    console.log(state);
+    console.log('Dispatching action ', action.type);
     switch (action.type) {
         case INITIALIZE_SPOTIFY:
             return state;
         case INITIALIZE_SPOTIFY_COMPLETED:
             return { isInitialized: action.payload.succeeded, errorMessage: action.payload.errorDetails };
         case PLAY_TRACK:
-            return state;
+            return { ...state, errorMessage: '' };
         case PLAY_TRACK_ERROR:
             return { ...state, errorMessage: action.payload };
         default:
