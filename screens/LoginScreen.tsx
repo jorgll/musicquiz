@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         color: '#333333',
         marginBottom: 5,
     },
-    spotifyLoginButton: {
+    greenButton: {
         justifyContent: 'center',
         borderRadius: 18,
         backgroundColor: 'green',
@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         height: 40,
         margin: 20,
     },
-    spotifyLoginButtonText: {
+    greenButtonText: {
         fontSize: 20,
         textAlign: 'center',
         color: 'white',
@@ -84,9 +84,9 @@ class LoginScreen extends React.Component<Props, State> {
             : 
                  <Text style={styles.instructions}>Press Play</Text>
             }
-            
-            <TouchableHighlight onPress={this.props.playTrack} style={styles.spotifyLoginButton}>
-                <Text style={styles.spotifyLoginButtonText}>Play Track</Text>
+
+            <TouchableHighlight onPress={this.props.playTrack} style={styles.greenButton}>
+                <Text style={styles.greenButtonText}>Play</Text>
             </TouchableHighlight>
             {this.props.spotifyErrorMessage !== '' ? <Text>{this.props.spotifyErrorMessage}</Text> : null}
 

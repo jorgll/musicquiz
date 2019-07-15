@@ -1,5 +1,10 @@
 // @ts-ignore: rn-spotify-sdk has no DefinitelyTyped TypeScript support
+
+// Using react-native-spotify for Spotify integration
+// https://github.com/lufinkey/react-native-spotify
+
 import Spotify from 'rn-spotify-sdk';
+import { PlaybackState } from './model';
 
 const spotifyOptions = {
     "clientID":"977489be68c34854b96b89be50eb877b",
@@ -19,6 +24,8 @@ const spotifyOptions = {
 
 const AlexanderHamiltonTrackId = "spotify:track:4TTV7EcfroSLWzXRY6gLv6";
 
+export type PlaybackStateChanged = (state: PlaybackState) => any;
+
 export class Service {
 
     isInitialized: boolean = false;
@@ -34,5 +41,13 @@ export class Service {
  
     async playTrack() { 
         await Spotify.playURI(AlexanderHamiltonTrackId, 0, 0);
+    }
+
+    registerEventHandler(eventName: string, eventHandler: PlaybackStateChanged) {
+        Spotify.on(eventName, (state: PlaybackState) => eventHandler(state));
+    }
+
+    removeAllEventHandlers() {
+        Spotify.removeAllListeners();
     }
 }
