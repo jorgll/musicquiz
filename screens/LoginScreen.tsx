@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from '../redux-root/state';
-import { SpotifyActionTypes, initializeSpotify, playTrack } from '../spotify'
+import { SpotifyActionTypes, initializeSpotify, playTrack, stopPlayback, getMyTracks, PlaybackState } from '../spotify'
 
 const styles = StyleSheet.create({
     container: {
@@ -41,8 +41,11 @@ const styles = StyleSheet.create({
 type Props = Readonly <{
     isSpotifyInitialized: boolean;
     spotifyErrorMessage: string;
+    playbackState: PlaybackState;
     initializeSpotify: () => SpotifyActionTypes;
     playTrack: () => SpotifyActionTypes;
+    stopPlayback: ()  => SpotifyActionTypes;
+    getMyTracks: () => SpotifyActionTypes;
 }>;
 
 type State = Readonly <{
@@ -53,12 +56,13 @@ const mapStateToProps = (state: RootState) => {
 
     return {
         isSpotifyInitialized: state.spotify.isInitialized,
-        spotifyErrorMessage: state.spotify.errorMessage
+        spotifyErrorMessage: state.spotify.errorMessage,
+        playbackState: state.spotify.playbackState
     }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => { 
-    return bindActionCreators({ initializeSpotify, playTrack }, dispatch)
+    return bindActionCreators({ initializeSpotify, playTrack, stopPlayback, getMyTracks }, dispatch)
 };
 
 class LoginScreen extends React.Component<Props, State> {
@@ -73,6 +77,7 @@ class LoginScreen extends React.Component<Props, State> {
     shouldComponentUpdate(nextProps: Props, nextState: State) {
         return (nextProps.isSpotifyInitialized === this.props.isSpotifyInitialized);
     }
+
 
     render() {
         console.log('Enter render(). Props: ', this.props);
@@ -89,6 +94,10 @@ class LoginScreen extends React.Component<Props, State> {
                 <Text style={styles.greenButtonText}>Play</Text>
             </TouchableHighlight>
             {this.props.spotifyErrorMessage !== '' ? <Text>{this.props.spotifyErrorMessage}</Text> : null}
+
+            <TouchableHighlight onPress={this.props.getMyTracks} style={styles.greenButton}>
+                <Text style={styles.greenButtonText}>GetMyTracks</Text>
+            </TouchableHighlight>
 
             </View>
         );

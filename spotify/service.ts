@@ -4,7 +4,7 @@
 // https://github.com/lufinkey/react-native-spotify
 
 import Spotify from 'rn-spotify-sdk';
-import { PlaybackState } from './model';
+import { PlaybackState, LibraryTracks } from './model';
 
 const spotifyOptions = {
     "clientID":"977489be68c34854b96b89be50eb877b",
@@ -41,6 +41,16 @@ export class Service {
  
     async playTrack() { 
         await Spotify.playURI(AlexanderHamiltonTrackId, 0, 0);
+    }
+
+    async stopPlayback() {
+        await Spotify.setPlaying(false);
+    }
+
+    async getMyTracks(): Promise<LibraryTracks> {
+        const result: LibraryTracks = await Spotify.getMyTracks();
+        console.log('Here are your tracks:', result);
+        return result;
     }
 
     registerEventHandler(eventName: string, eventHandler: PlaybackStateChanged) {

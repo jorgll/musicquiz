@@ -4,21 +4,28 @@ import {
     INITIALIZE_SPOTIFY_COMPLETED, 
     PLAY_TRACK,
     PLAY_TRACK_ERROR,
-    PLAYBACK_STATE_CHANGED
+    PLAYBACK_STATE_CHANGED,
+    STOP_PLAYBACK,
+    STOP_PLAYBACK_ERROR,
+    GET_MY_TRACKS,
+    GET_MY_TRACKS_COMPLETED,
+    GET_MY_TRACKS_ERROR
 } from './actions';
-import { PlaybackState } from '../model';
+import { PlaybackState, LibraryTracks } from '../model';
 
 export type SpotifyState = Readonly<{
     isInitialized: boolean;
     errorMessage: string;
     playbackState: PlaybackState;
+    songLibrary: LibraryTracks;
 }>;
 
 
 const initialState: SpotifyState = {
     isInitialized: false,
     errorMessage: '',
-    playbackState: null
+    playbackState: null,
+    songLibrary: null
 };
 
 const spotifyReducer = (state = initialState, action: SpotifyActionTypes): SpotifyState => {
@@ -34,6 +41,16 @@ const spotifyReducer = (state = initialState, action: SpotifyActionTypes): Spoti
             return { ...state, errorMessage: action.payload };
         case PLAYBACK_STATE_CHANGED:
             return { ...state, playbackState: action.payload };
+        case STOP_PLAYBACK:
+            return state;
+        case STOP_PLAYBACK_ERROR:
+            return { ...state, errorMessage: action.payload };
+        case GET_MY_TRACKS:
+            return state;
+        case GET_MY_TRACKS_COMPLETED:
+            return { ...state, songLibrary: action.payload };
+        case GET_MY_TRACKS_ERROR:
+            return { ...state, errorMessage: action.payload };
         default:
             return state;
     }
