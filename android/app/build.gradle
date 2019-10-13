@@ -138,6 +138,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-screens')
+    implementation project(':react-native-reanimated')
     implementation project(':react-native-gesture-handler')
     implementation project(':rn-spotify-sdk')
     implementation project(':react-native-events')

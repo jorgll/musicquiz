@@ -70,6 +70,10 @@ class LoginScreen extends React.Component<Props, State> {
         super(props);
     }
 
+    static navigationOptions = {
+        title: 'Login',
+    }
+
     componentDidMount() {
        this.props.initializeSpotify();
     }
@@ -80,7 +84,6 @@ class LoginScreen extends React.Component<Props, State> {
 
 
     render() {
-        console.log('Enter render(). Props: ', this.props);
         return (
             <View style={styles.container}>
             <Text style={styles.welcome}>Spotify Music Quiz</Text>

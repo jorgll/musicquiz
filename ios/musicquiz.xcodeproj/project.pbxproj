@@ -43,6 +43,7 @@
 		D0617CDD227F83D300A5D83F /* SpotifyAudioPlayback.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0617CDC227F83D300A5D83F /* SpotifyAudioPlayback.framework */; };
 		D0617CDF227F83E400A5D83F /* SpotifyMetadata.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0617CDE227F83E400A5D83F /* SpotifyMetadata.framework */; };
 		D0617CE1227F843300A5D83F /* SpotifyAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0617CE0227F843300A5D83F /* SpotifyAuthentication.framework */; };
+		D09C56242353C7880097798E /* libRNGestureHandler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D09C56202353C7460097798E /* libRNGestureHandler.a */; };
 		ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED297162215061F000B7C4FE /* JavaScriptCore.framework */; };
 		ED2971652150620600B7C4FE /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ED2971642150620600B7C4FE /* JavaScriptCore.framework */; };
 /* End PBXBuildFile section */
@@ -335,6 +336,20 @@
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSpotify;
 		};
+		D09C561F2353C7460097798E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D09C55F42353C7460097798E /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNGestureHandler;
+		};
+		D09C56212353C7460097798E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D09C55F42353C7460097798E /* RNGestureHandler.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B5C32A36220C603B000FFB8D;
+			remoteInfo = "RNGestureHandler-tvOS";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -371,6 +386,7 @@
 		D0617CDC227F83D300A5D83F /* SpotifyAudioPlayback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAudioPlayback.framework; sourceTree = "<group>"; };
 		D0617CDE227F83E400A5D83F /* SpotifyMetadata.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyMetadata.framework; sourceTree = "<group>"; };
 		D0617CE0227F843300A5D83F /* SpotifyAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SpotifyAuthentication.framework; sourceTree = "<group>"; };
+		D09C55F42353C7460097798E /* RNGestureHandler.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNGestureHandler.xcodeproj; path = "../node_modules/react-native-gesture-handler/ios/RNGestureHandler.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -388,6 +404,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09C56242353C7880097798E /* libRNGestureHandler.a in Frameworks */,
 				ED297163215061F000B7C4FE /* JavaScriptCore.framework in Frameworks */,
 				D0617CDD227F83D300A5D83F /* SpotifyAudioPlayback.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
@@ -586,6 +603,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D09C55F42353C7460097798E /* RNGestureHandler.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -669,6 +687,15 @@
 			isa = PBXGroup;
 			children = (
 				D0617CDB227F836000A5D83F /* libRNSpotify.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D09C55F52353C7460097798E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D09C56202353C7460097798E /* libRNGestureHandler.a */,
+				D09C56222353C7460097798E /* libRNGestureHandler-tvOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -841,6 +868,10 @@
 				{
 					ProductGroup = D0617C9F227F835700A5D83F /* Products */;
 					ProjectRef = 0AD9C3205FF24EDF8137F4A1 /* RNEventEmitter.xcodeproj */;
+				},
+				{
+					ProductGroup = D09C55F52353C7460097798E /* Products */;
+					ProjectRef = D09C55F42353C7460097798E /* RNGestureHandler.xcodeproj */;
 				},
 				{
 					ProductGroup = D0617CD7227F836000A5D83F /* Products */;
@@ -1129,6 +1160,20 @@
 			fileType = archive.ar;
 			path = libRNSpotify.a;
 			remoteRef = D0617CDA227F836000A5D83F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D09C56202353C7460097798E /* libRNGestureHandler.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNGestureHandler.a;
+			remoteRef = D09C561F2353C7460097798E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D09C56222353C7460097798E /* libRNGestureHandler-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRNGestureHandler-tvOS.a";
+			remoteRef = D09C56212353C7460097798E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

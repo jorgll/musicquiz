@@ -5,25 +5,27 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "postinstall": "jetify"
+    "postinstall": "jetifier -r"
   },
   "dependencies": {
     "@types/lodash": "^4.14.136",
     "@types/react-redux": "^7.0.8",
     "@types/remote-redux-devtools": "^0.5.3",
     "axios": "^0.18.0",
-    "jetifier": "^1.6.3",
+    "jetifier": "^1.6.4",
     "lodash": "^4.17.14",
     "react": "16.8.6",
-    "react-native": "0.59.8",
-    "react-native-gesture-handler": "^1.3.0",
+    "react-native": "0.59.9",
+    "react-native-gesture-handler": "^1.4.1",
+    "react-native-reanimated": "^1.3.0",
+    "react-native-screens": "^1.0.0-alpha.23",
     "react-navigation": "^3.11.1",
     "react-redux": "^7.0.3",
     "redux": "^4.0.1",
     "redux-axios-middleware": "^4.0.0",
     "redux-saga": "^1.0.2",
     "remote-redux-devtools": "^0.5.16",
-    "rn-spotify-sdk": "^1.2.7"
+    "rn-spotify-sdk": "^1.2.11"
   },
   "devDependencies": {
     "@babel/core": "^7.4.4",
