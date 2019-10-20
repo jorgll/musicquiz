@@ -11,7 +11,7 @@
     "@types/lodash": "^4.14.136",
     "@types/react-redux": "^7.0.8",
     "@types/remote-redux-devtools": "^0.5.3",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "jetifier": "^1.6.4",
     "lodash": "^4.17.14",
     "react": "16.8.6",
