@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@types/lodash": "^4.14.136",
+    "@types/react-navigation": "^3.0.8",
     "@types/react-redux": "^7.0.8",
     "@types/remote-redux-devtools": "^0.5.3",
     "axios": "^0.18.1",

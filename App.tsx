@@ -8,16 +8,19 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 const mainNavigator = createStackNavigator({
   Home: { screen: LoginScreen },
   Question: { screen: QuestionScreen },
+},
+{
+  initialRouteName: 'Home'
 });
 
-const Navigation = createAppContainer(mainNavigator);
+const AppContainer = createAppContainer(mainNavigator);
 
 export default class App extends Component<{}> {
 
   render() {
     return (
       <Provider store={store}>
-        <Navigation />
+        <AppContainer />
       </Provider>
     )
   }
