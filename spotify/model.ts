@@ -45,7 +45,7 @@ export type LibraryTrack = Readonly<{
     added_at: Date;
     track: {
         album: LibraryAlbum;
-        artists: LibraryArtist;
+        artists: [LibraryArtist];
         available_markets: [string];
         disc_number: number;
         duration_ms: number;

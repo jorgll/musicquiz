@@ -26,7 +26,9 @@ export type InitializeSpotifyCompletedAction = Readonly<{
 
 export type PlayTrackAction = Readonly <{
     type: typeof PLAY_TRACK
-    payload: { }
+    payload: { 
+        id: string
+    }
 }>;
 
 export type PlayTrackErrorAction = Readonly<{
@@ -78,8 +80,13 @@ export function initializeSpotifyCompleted(succeeded: boolean, error: string) {
     }
 }
 
-export function playTrack(): SpotifyActionTypes {
-    return { type: PLAY_TRACK, payload: {}}
+export function playTrack(id: string): SpotifyActionTypes {
+    console.log('action creator playTrack: ');
+    console.log(id);
+    return { 
+        type: PLAY_TRACK, 
+        payload: { id }
+    }
 }
 
 export function playTrackError(error: string): SpotifyActionTypes {
@@ -90,7 +97,10 @@ export function playTrackError(error: string): SpotifyActionTypes {
 }
 
 export function stopPlayback(): SpotifyActionTypes {
-    return { type: STOP_PLAYBACK, payload: {} }
+    return { 
+        type: STOP_PLAYBACK, 
+        payload: {} 
+    }
 }
 
 export function stopPlaybackError(error: string): SpotifyActionTypes {

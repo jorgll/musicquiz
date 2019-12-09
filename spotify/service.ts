@@ -22,6 +22,7 @@ const spotifyOptions = {
     ],
 };
 
+const SpotifyTrackIdPrefix: string = "spotify:track:";
 const AlexanderHamiltonTrackId = "spotify:track:4TTV7EcfroSLWzXRY6gLv6";
 
 export type PlaybackStateChanged = (state: PlaybackState) => any;
@@ -39,8 +40,10 @@ export class Service {
         await Spotify.login();
     }
  
-    async playTrack() { 
-        await Spotify.playURI(AlexanderHamiltonTrackId, 0, 0);
+    async playTrack(id: string) { 
+        const trackId: string = SpotifyTrackIdPrefix + id;
+        console.log('Spotify Service: Play track ' + trackId);
+        await Spotify.playURI(trackId, 0, 0);
     }
 
     async stopPlayback() {

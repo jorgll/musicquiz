@@ -1,5 +1,5 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { INITIALIZE_SPOTIFY, PLAY_TRACK, actions, GET_MY_TRACKS, STOP_PLAYBACK } from './actions'
+import { INITIALIZE_SPOTIFY, PLAY_TRACK, actions, GET_MY_TRACKS, STOP_PLAYBACK, PlayTrackAction } from './actions'
 import { Service } from '../service'
 import { PlaybackState, LibraryTracks } from '../model';
 import { eventChannel, END } from 'redux-saga';
@@ -70,9 +70,11 @@ export class Saga {
         }
     }
 
-    *playTrack() {
+    *playTrack(action: PlayTrackAction) {
         try {
-            yield this.service.playTrack();
+            console.log('saga playTrack ');
+            console.log(action);
+            yield this.service.playTrack(action.payload.id);
         } catch (error) {
             yield put (actions.playTrackError(error.message));
         }

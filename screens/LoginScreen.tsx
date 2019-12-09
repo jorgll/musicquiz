@@ -90,9 +90,6 @@ class LoginScreen extends React.Component<Props, State> {
                  <Text style={styles.instructions}>Press Start</Text>
             }
 
-            {/* <TouchableHighlight onPress={this.props.playTrack} style={styles.greenButton}>
-                <Text style={styles.greenButtonText}>Play Song</Text>
-            </TouchableHighlight> */}
             {this.props.spotifyErrorMessage !== '' ? <Text>{this.props.spotifyErrorMessage}</Text> : null}
 
             <TouchableHighlight onPress={() => this.props.navigation.navigate('Question')} style={styles.greenButton}>

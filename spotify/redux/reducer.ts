@@ -18,6 +18,7 @@ export type SpotifyState = Readonly<{
     errorMessage: string;
     playbackState: PlaybackState;
     songLibrary: LibraryTracks;
+    trackIdRequestedForPlayback: string;
 }>;
 
 
@@ -25,7 +26,8 @@ const initialState: SpotifyState = {
     isInitialized: false,
     errorMessage: '',
     playbackState: null,
-    songLibrary: null
+    songLibrary: null,
+    trackIdRequestedForPlayback: ''
 };
 
 const spotifyReducer = (state = initialState, action: SpotifyActionTypes): SpotifyState => {
@@ -36,7 +38,8 @@ const spotifyReducer = (state = initialState, action: SpotifyActionTypes): Spoti
         case INITIALIZE_SPOTIFY_COMPLETED:
             return { ...state, isInitialized: action.payload.succeeded, errorMessage: action.payload.errorDetails };
         case PLAY_TRACK:
-            return { ...state, errorMessage: '' };
+            console.log('reducer PLAY_TRACK ' + action.payload);
+            return { ...state, trackIdRequestedForPlayback: action.payload.id, errorMessage: '' };
         case PLAY_TRACK_ERROR:
             return { ...state, errorMessage: action.payload };
         case PLAYBACK_STATE_CHANGED:

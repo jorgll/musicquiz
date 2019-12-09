@@ -50,13 +50,14 @@ type Props = Readonly <{
     playbackState: PlaybackState;
     songLibrary: LibraryTracks;
     initializeSpotify: () => SpotifyActionTypes;
-    playTrack: () => SpotifyActionTypes;
+    playTrack: (id: string) => SpotifyActionTypes;
     stopPlayback: ()  => SpotifyActionTypes;
     getMyTracks: () => SpotifyActionTypes;
 }>;
 
 type State = Readonly <{
-    trackIndex: number;
+    questions: number[];
+    answer: number;
 }>;
 
 const mapStateToProps = (state: RootState) => {
@@ -71,39 +72,87 @@ const mapStateToProps = (state: RootState) => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => { 
-    return bindActionCreators({ initializeSpotify, playTrack, stopPlayback, getMyTracks }, dispatch)
+    return bindActionCreators({ 
+        initializeSpotify, 
+        playTrack, 
+        stopPlayback, 
+        getMyTracks 
+    }, dispatch)
 };
+
+const PotentialAnswersPerScreen = 4;
+const SpotifyTrackPageSize = 20;
 
 class QuestionScreen extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            trackIndex: 0
+            answer: 0,
+            questions: []
         }
     }
 
-    pickRandomSong() {
-        const randomIndex: number = Math.floor(Math.random()*21);
-        this.setState({ trackIndex: randomIndex });
+    // Choose N number of random songs from a user's recent library
+    // This method only handles the randomization of numbers from 0-19 as defined by SpotifyTrackPageSize
+    // To turn these into actual track objects you need to go through the songLibrary prop
+    pickSongs() {
+        let current: number = 0;
+        let questions: number[] = [];
+
+        while (questions.length < PotentialAnswersPerScreen) {
+            current = Math.floor(Math.random()*SpotifyTrackPageSize);
+            if (questions.find(q => q == current)) {
+                continue;
+            }
+            questions.push(current);
+        }
+
+        this.setState({ answer: questions[0], questions: questions });
+        if (this.props.songLibrary) {
+            const answerId: string = this.props.songLibrary.items[questions[0]].track.id;
+            this.props.playTrack(answerId);
+        }
     }
 
+    // Issue a fetch of the tracks as soon as this screen is loaded
     componentDidMount() {
         if (!this.props.songLibrary) {
             this.props.getMyTracks();
         }
-        this.pickRandomSong();
      }
-    
+
+    // Iterate over songs in a screen and show a text element for each one
+    renderSongs() {
+        const questions: number[] = this.state.questions;
+        if (this.props.songLibrary && this.props.songLibrary.items.length > 0 && questions.length > 0) {
+            const items: [LibraryTrack] = this.props.songLibrary.items;
+            
+            const renderedTracks = questions.map(i => {
+                return <Text key={i} style={styles.helloworld}>
+                    {items[i].track.name} ({items[i].track.artists[0].name})
+                </Text>;
+            });
+
+            return (
+                <View>
+                    {renderedTracks}
+                </View>
+            )
+        }
+        else {
+            return null;
+        }
+    }
+     
     render() {
         return (
             <View style={styles.container}>
                 <Text style={styles.helloworld}>Guess the song</Text>
-                {this.props.songLibrary && 
-                    <Text style={styles.helloworld}>{this.props.songLibrary.items[this.state.trackIndex].track.name}</Text>
-                }
-                <TouchableHighlight style={styles.greenButton} onPress={() => this.pickRandomSong()}>
+                {this.renderSongs()}
+
+                <TouchableHighlight style={styles.greenButton} onPress={() => this.pickSongs()}>
                     <Text style={styles.greenButtonText}>
-                        Next Song
+                        Pick new songs
                     </Text>
                 </TouchableHighlight>
             </View>
