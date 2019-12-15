@@ -5,7 +5,8 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from '../redux-root/state';
 import { NavigationScreenProp } from 'react-navigation';
 import { QuestionModule } from '../uicomponents/QuestionModule'
-import {Question } from '../uicomponents/Question';
+import { Song } from '../uicomponents/Song';
+import * as Colors from '../uicomponents/ColorScheme';
 import { 
     SpotifyActionTypes, 
     initializeSpotify, 
@@ -20,26 +21,26 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5FCFF',
+        backgroundColor: Colors.BACKGROUND_PRIMARY,
     },
     helloworld: {
         fontSize: 20,
         textAlign: 'center',
         margin: 10,
     },
-    greenButton: {
+    button: {
         justifyContent: 'center',
         borderRadius: 18,
-        backgroundColor: 'green',
+        backgroundColor: Colors.ACCENT,
         overflow: 'hidden',
         width: 200,
         height: 40,
         margin: 20,
     },
-    greenButtonText: {
+    buttonText: {
         fontSize: 20,
         textAlign: 'center',
-        color: 'white',
+        color: Colors.FOREGROUND_PRIMARY,
     },
 });
 
@@ -58,6 +59,7 @@ type Props = Readonly <{
 type State = Readonly <{
     questionIndices: number[];
     answer: number;
+    answerTrackId: string;
 }>;
 
 const mapStateToProps = (state: RootState) => {
@@ -88,7 +90,8 @@ class QuestionScreen extends React.Component<Props, State> {
         super(props);
         this.state = {
             answer: 0,
-            questionIndices: []
+            questionIndices: [],
+            answerTrackId: ''
         }
     }
 
@@ -109,7 +112,10 @@ class QuestionScreen extends React.Component<Props, State> {
 
         this.setState({ answer: questionIndices[0], questionIndices: questionIndices });
         if (this.props.songLibrary) {
-            const answerId: string = this.props.songLibrary.items[questionIndices[0]].track.id;
+            const answerIndex = Math.floor(Math.random()*PotentialAnswersPerScreen);
+            const answerId: string = this.props.songLibrary.items[questionIndices[answerIndex]].track.id;
+            this.setState({ answerTrackId: answerId });
+            console.log('answer index is ' + answerIndex);
             this.props.playTrack(answerId);
         }
     }
@@ -127,18 +133,18 @@ class QuestionScreen extends React.Component<Props, State> {
         if (this.props.songLibrary && this.props.songLibrary.items.length > 0 && questionIndices.length > 0) {
             const items: [LibraryTrack] = this.props.songLibrary.items;
 
-            let questionsToRender: Question[] = new Array<Question>();
+            let songsToRender: Song[] = new Array<Song>();
             questionIndices.map(i => {
-                const q: Question = new Question(
+                const q: Song = new Song(
                     items[i].track.id,
                     items[i].track.name,
                     items[i].track.artists[0].name,
                     items[i].track.album.images[0].url);
-                questionsToRender.push(q);
+                    songsToRender.push(q);
             });
 
             return (
-                <QuestionModule questions={questionsToRender} />
+                <QuestionModule songs={songsToRender} answerId={this.state.answerTrackId} />
             )
         }
         else {
@@ -148,8 +154,8 @@ class QuestionScreen extends React.Component<Props, State> {
 
     renderPickNewSongsButton() {
         return (
-            <TouchableHighlight style={styles.greenButton} onPress={() => this.pickSongs()}>
-                <Text style={styles.greenButtonText}>
+            <TouchableHighlight style={styles.button} onPress={() => this.pickSongs()}>
+                <Text style={styles.buttonText}>
                     Pick new songs
                 </Text>
             </TouchableHighlight>

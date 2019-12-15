@@ -5,13 +5,14 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { NavigationScreenProp } from 'react-navigation';
 import { RootState } from '../redux-root/state';
 import { SpotifyActionTypes, initializeSpotify } from '../spotify'
+import * as Colors from '../uicomponents/ColorScheme';
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
+        backgroundColor: Colors.BACKGROUND_PRIMARY,
     },
     welcome: {
         fontSize: 20,
@@ -20,13 +21,13 @@ const styles = StyleSheet.create({
     },
     instructions: {
         textAlign: 'center',
-        color: '#333333',
+        color: Colors.FOREGROUND_PRIMARY,
         marginBottom: 5,
     },
-    greenButton: {
+    button: {
         justifyContent: 'center',
         borderRadius: 18,
-        backgroundColor: 'green',
+        backgroundColor: Colors.ACCENT,
         overflow: 'hidden',
         width: 200,
         height: 40,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     greenButtonText: {
         fontSize: 20,
         textAlign: 'center',
-        color: 'white',
+        color: Colors.FOREGROUND_PRIMARY,
     },
 });
 
@@ -92,7 +93,7 @@ class LoginScreen extends React.Component<Props, State> {
 
             {this.props.spotifyErrorMessage !== '' ? <Text>{this.props.spotifyErrorMessage}</Text> : null}
 
-            <TouchableHighlight onPress={() => this.props.navigation.navigate('Question')} style={styles.greenButton}>
+            <TouchableHighlight onPress={() => this.props.navigation.navigate('Question')} style={styles.button}>
                 <Text style={styles.greenButtonText}>Start Quiz</Text>
             </TouchableHighlight>
 

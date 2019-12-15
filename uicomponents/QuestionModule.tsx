@@ -1,31 +1,46 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Question } from './Question';
-import { QuestionCard } from './QuestionCard';
+import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
+import { Song } from './Song';
+import { SongCard } from './SongCard';
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF'
+        alignItems: 'center'
     },
-    standardText: {
-        fontSize: 20,
+    correct: {
+        fontSize: 12,
         textAlign: 'center',
-        margin: 10,
+        fontWeight: 'bold'
+    },
+    incorrect: {
+        fontSize: 12,
+        textAlign: 'center',
+        fontWeight: 'bold'
     }
 });
 
 type Props = Readonly<{
-    questions: Question[];
+    songs: Song[];
+    answerId: string;
 }>;
 
-function QuestionModule ( {questions}: Props ) {
-    if (!questions || questions.length === 0 ) return null;
+function guessAnswer(currentTrackId: string, answerId: string) {
+    if (currentTrackId === answerId) {
+        console.log('correct');
+    } else {
+        console.log('wrong');
+    }
+}
 
-    let questionItems = questions.map(item => {
-        return ( <QuestionCard question={item} key={item.id}/> );
+function QuestionModule ( {songs, answerId}: Props ) {
+    if (!songs || songs.length === 0 ) return null;
+
+    let questionItems = songs.map(s => {
+        return (
+            <TouchableHighlight key={"th" + s.id} onPress={() => guessAnswer(s.id, answerId)}>
+                <SongCard song={s} key={s.id}/> 
+            </TouchableHighlight>
+        );
     });
 
     return (

@@ -1,4 +1,4 @@
-export class Question {
+export class Song {
     public id: string;
     public title: string;
     public artist: string;
