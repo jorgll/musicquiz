@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableHighlight, TouchableHighlightBase } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, TouchableHighlight, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from '../redux-root/state';
 import { NavigationScreenProp } from 'react-navigation';
+import { QuestionModule } from '../uicomponents/QuestionModule'
+import {Question } from '../uicomponents/Question';
 import { 
     SpotifyActionTypes, 
     initializeSpotify, 
@@ -18,8 +20,6 @@ import {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
     helloworld: {
@@ -56,7 +56,7 @@ type Props = Readonly <{
 }>;
 
 type State = Readonly <{
-    questions: number[];
+    questionIndices: number[];
     answer: number;
 }>;
 
@@ -88,7 +88,7 @@ class QuestionScreen extends React.Component<Props, State> {
         super(props);
         this.state = {
             answer: 0,
-            questions: []
+            questionIndices: []
         }
     }
 
@@ -97,19 +97,19 @@ class QuestionScreen extends React.Component<Props, State> {
     // To turn these into actual track objects you need to go through the songLibrary prop
     pickSongs() {
         let current: number = 0;
-        let questions: number[] = [];
+        let questionIndices: number[] = [];
 
-        while (questions.length < PotentialAnswersPerScreen) {
+        while (questionIndices.length < PotentialAnswersPerScreen) {
             current = Math.floor(Math.random()*SpotifyTrackPageSize);
-            if (questions.find(q => q == current)) {
+            if (questionIndices.find(q => q == current)) {
                 continue;
             }
-            questions.push(current);
+            questionIndices.push(current);
         }
 
-        this.setState({ answer: questions[0], questions: questions });
+        this.setState({ answer: questionIndices[0], questionIndices: questionIndices });
         if (this.props.songLibrary) {
-            const answerId: string = this.props.songLibrary.items[questions[0]].track.id;
+            const answerId: string = this.props.songLibrary.items[questionIndices[0]].track.id;
             this.props.playTrack(answerId);
         }
     }
@@ -123,39 +123,46 @@ class QuestionScreen extends React.Component<Props, State> {
 
     // Iterate over songs in a screen and show a text element for each one
     renderSongs() {
-        const questions: number[] = this.state.questions;
-        if (this.props.songLibrary && this.props.songLibrary.items.length > 0 && questions.length > 0) {
+        const questionIndices: number[] = this.state.questionIndices;
+        if (this.props.songLibrary && this.props.songLibrary.items.length > 0 && questionIndices.length > 0) {
             const items: [LibraryTrack] = this.props.songLibrary.items;
-            
-            const renderedTracks = questions.map(i => {
-                return <Text key={i} style={styles.helloworld}>
-                    {items[i].track.name} ({items[i].track.artists[0].name})
-                </Text>;
+
+            let questionsToRender: Question[] = new Array<Question>();
+            questionIndices.map(i => {
+                const q: Question = new Question(
+                    items[i].track.id,
+                    items[i].track.name,
+                    items[i].track.artists[0].name,
+                    items[i].track.album.images[0].url);
+                questionsToRender.push(q);
             });
 
             return (
-                <View>
-                    {renderedTracks}
-                </View>
+                <QuestionModule questions={questionsToRender} />
             )
         }
         else {
             return null;
         }
     }
+
+    renderPickNewSongsButton() {
+        return (
+            <TouchableHighlight style={styles.greenButton} onPress={() => this.pickSongs()}>
+                <Text style={styles.greenButtonText}>
+                    Pick new songs
+                </Text>
+            </TouchableHighlight>
+        );
+    }
      
     render() {
         return (
-            <View style={styles.container}>
+            <ScrollView style={styles.container}>
                 <Text style={styles.helloworld}>Guess the song</Text>
                 {this.renderSongs()}
-
-                <TouchableHighlight style={styles.greenButton} onPress={() => this.pickSongs()}>
-                    <Text style={styles.greenButtonText}>
-                        Pick new songs
-                    </Text>
-                </TouchableHighlight>
-            </View>
+                {this.renderPickNewSongsButton()}
+            </ScrollView>
         );
     }
 }
