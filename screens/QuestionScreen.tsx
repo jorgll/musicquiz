@@ -23,10 +23,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: Colors.BACKGROUND_PRIMARY,
     },
-    helloworld: {
+    screenTitle: {
         fontSize: 20,
-        textAlign: 'center',
         margin: 10,
+        color: Colors.FOREGROUND_PRIMARY,
+        paddingBottom: 30,
     },
     button: {
         justifyContent: 'center',
@@ -165,7 +166,7 @@ class QuestionScreen extends React.Component<Props, State> {
     render() {
         return (
             <ScrollView style={styles.container}>
-                <Text style={styles.helloworld}>Guess the song</Text>
+                <Text style={styles.screenTitle}>Guess the song</Text>
                 {this.renderSongs()}
                 {this.renderPickNewSongsButton()}
             </ScrollView>

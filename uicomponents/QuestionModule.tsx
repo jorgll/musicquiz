@@ -5,7 +5,11 @@ import { SongCard } from './SongCard';
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center'
+        alignItems: 'center',
+        width: '100%',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
     },
     correct: {
         fontSize: 12,

@@ -6,28 +6,30 @@ import * as Colors from '../uicomponents/ColorScheme';
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: '#D1CCDC',
-        borderColor: '#424C55',
-        borderWidth: 1,
-        width: 200,
-        height: 150
+        backgroundColor: '#000000',
+        paddingBottom: 40,
+        paddingHorizontal: 20,
+    },
+    albumWithMetadataContainer: {
+        alignItems: 'flex-start',
     },
     songTitle: {
-        color: '#3D2C2E',
+        color: '#FFFFFF',
         paddingTop: 5,
-        fontSize: 12,
-        textAlign: 'center',
-        fontWeight: 'bold'
+        fontSize: 6,
+        textAlign: 'left',
+        fontWeight: 'bold',
+        width: 120,
     },
     songArtist: {
-        color: '#3D2C2E',
-        fontSize: 10,
-        textAlign: 'center',
-        paddingBottom: 3,
+        color: '#FFFFFF',
+        fontSize: 5,
+        textAlign: 'left',
+        width: 120,
     },
     albumArtStyle: {
-        width: 80,
-        height: 80,
+        width: 120,
+        height: 120,
     }
 });
 
@@ -38,16 +40,18 @@ type Props = Readonly<{
 function SongCard ( {song}: Props ) {
     return (
         <View key={"vw"+song.id} style={styles.container}>
-            <Text key={"txtLine1"+song.id} style={styles.songTitle}>
-                {song.title}
-            </Text>
-            <Text key={"txtLine2"+song.id} style={styles.songArtist}>
-                {song.artist}
-            </Text>
-            <Image key={"img"+song.id} 
-                source={{uri: song.albumArt}} 
-                style={styles.albumArtStyle}
-            />
+            <View style={styles.albumWithMetadataContainer}>
+                <Image key={"img"+song.id} 
+                    source={{uri: song.albumArt}} 
+                    style={styles.albumArtStyle}
+                />
+                <Text key={"txtLine1"+song.id} style={styles.songTitle} numberOfLines={1}>
+                    {song.title}
+                </Text>
+                <Text key={"txtLine2"+song.id} style={styles.songArtist} numberOfLines={1} >
+                    {song.artist}
+                </Text>
+            </View>
         </View>
     );
 }
