@@ -15,6 +15,7 @@
     "axios": "^0.18.1",
     "jetifier": "^1.6.4",
     "lodash": "^4.17.14",
+    "native-base": "^2.13.8",
     "react": "16.8.6",
     "react-devtools": "^4.2.1",
     "react-native": "0.59.9",

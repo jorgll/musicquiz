@@ -6,7 +6,7 @@ import * as Colors from '../uicomponents/ColorScheme';
 const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
-        backgroundColor: '#000000',
+        backgroundColor: Colors.BACKGROUND_PRIMARY,
         paddingBottom: 40,
         paddingHorizontal: 20,
     },
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
     },
     songTitle: {
-        color: '#FFFFFF',
+        color: Colors.FOREGROUND_PRIMARY,
         paddingTop: 5,
         fontSize: 6,
         textAlign: 'left',
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         width: 120,
     },
     songArtist: {
-        color: '#FFFFFF',
+        color: Colors.FOREGROUND_PRIMARY,
         fontSize: 5,
         textAlign: 'left',
         width: 120,

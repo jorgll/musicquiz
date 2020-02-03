@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, TouchableHighlight, Text } from 'react-native';
+import { Toast } from 'native-base';
 import { Song } from './Song';
 import { SongCard } from './SongCard';
+import * as Colors from './ColorScheme';
 
 const styles = StyleSheet.create({
     container: {
@@ -11,16 +13,6 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
     },
-    correct: {
-        fontSize: 12,
-        textAlign: 'center',
-        fontWeight: 'bold'
-    },
-    incorrect: {
-        fontSize: 12,
-        textAlign: 'center',
-        fontWeight: 'bold'
-    }
 });
 
 type Props = Readonly<{
@@ -30,8 +22,18 @@ type Props = Readonly<{
 
 function guessAnswer(currentTrackId: string, answerId: string) {
     if (currentTrackId === answerId) {
+        Toast.show({
+            text: 'Correct!',
+            buttonText: 'X',
+            type: "success", 
+        });
         console.log('correct');
     } else {
+        Toast.show({
+            text: 'Incorrect! Try again',
+            buttonText: 'X',
+            type: "danger", 
+        });
         console.log('wrong');
     }
 }
