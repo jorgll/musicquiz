@@ -7,6 +7,7 @@ import { NavigationScreenProp } from 'react-navigation';
 import { QuestionModule } from '../uicomponents/QuestionModule'
 import { Song } from '../uicomponents/Song';
 import * as Colors from '../uicomponents/ColorScheme';
+import { Toast } from 'native-base';
 import { 
     SpotifyActionTypes, 
     initializeSpotify, 
@@ -128,6 +129,18 @@ class QuestionScreen extends React.Component<Props, State> {
         }
      }
 
+    // Show a toast message depending on the outcome of the answer.
+    // If the user guesses the right answer, get a new set of songs
+    onAnswer = (isCorrect: boolean) => {
+        // Show the right type of toast depending on correct or incorrect response, then pick new songs
+        if (isCorrect) {
+            Toast.show({ text: 'Correct!', buttonText: 'X', type: "success" });
+            this.pickSongs();
+        } else {
+            Toast.show({ text: 'Incorrect! Try again', buttonText: 'X', type: "danger" });
+        }
+    }
+
     // Iterate over songs in a screen and show a text element for each one
     renderSongs() {
         const questionIndices: number[] = this.state.questionIndices;
@@ -145,7 +158,7 @@ class QuestionScreen extends React.Component<Props, State> {
             });
 
             return (
-                <QuestionModule songs={songsToRender} answerId={this.state.answerTrackId} />
+                <QuestionModule songs={songsToRender} answerId={this.state.answerTrackId} onAnswer={this.onAnswer} />
             )
         }
         else {
