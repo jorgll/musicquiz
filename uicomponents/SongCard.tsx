@@ -16,14 +16,17 @@ const styles = StyleSheet.create({
     songTitle: {
         color: Colors.FOREGROUND_PRIMARY,
         paddingTop: 5,
-        fontSize: 6,
+        fontSize: 14,
         textAlign: 'left',
         fontWeight: 'bold',
         width: 120,
+        textShadowColor: "#333333",
+        textShadowOffset: { width: 0.5, height: 0.5},
+        textShadowRadius: 3,
     },
     songArtist: {
-        color: Colors.FOREGROUND_PRIMARY,
-        fontSize: 5,
+        color: Colors.FOREGROUND_SECONDARY,
+        fontSize: 12,
         textAlign: 'left',
         width: 120,
     },
@@ -45,10 +48,10 @@ function SongCard ( {song}: Props ) {
                     source={{uri: song.albumArt}} 
                     style={styles.albumArtStyle}
                 />
-                <Text key={"txtLine1"+song.id} style={styles.songTitle} numberOfLines={1}>
+                <Text key={"txtLine1"+song.id} style={styles.songTitle} numberOfLines={2}>
                     {song.title}
                 </Text>
-                <Text key={"txtLine2"+song.id} style={styles.songArtist} numberOfLines={1} >
+                <Text key={"txtLine2"+song.id} style={styles.songArtist} numberOfLines={1} ellipsizeMode={'tail'}>
                     {song.artist}
                 </Text>
             </View>

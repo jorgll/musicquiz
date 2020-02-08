@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, TouchableHighlight, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableHighlight, ScrollView, View } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { RootState } from '../redux-root/state';
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.BACKGROUND_PRIMARY,
+        flexWrap: 'wrap',
     },
     screenTitle: {
         fontSize: 20,
@@ -134,6 +135,7 @@ class QuestionScreen extends React.Component<Props, State> {
     onAnswer = (isCorrect: boolean) => {
         // Show the right type of toast depending on correct or incorrect response, then pick new songs
         if (isCorrect) {
+            Toast.hide();
             Toast.show({ text: 'Correct!', buttonText: 'X', type: "success" });
             this.pickSongs();
         } else {
@@ -162,7 +164,9 @@ class QuestionScreen extends React.Component<Props, State> {
             )
         }
         else {
-            return null;
+            return (
+                <View style={{backgroundColor: 'blue', flex: 0.5}} />
+            );
         }
     }
 

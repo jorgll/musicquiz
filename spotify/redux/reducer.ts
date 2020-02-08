@@ -32,6 +32,7 @@ const initialState: SpotifyState = {
 
 const spotifyReducer = (state = initialState, action: SpotifyActionTypes): SpotifyState => {
     console.log('Dispatching action ', action.type);
+    console.log(state);
     switch (action.type) {
         case INITIALIZE_SPOTIFY:
             return state;
